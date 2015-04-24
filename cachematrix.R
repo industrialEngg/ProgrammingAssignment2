@@ -16,7 +16,8 @@
 	  ## If matrix x is the same as what is cached:the function checks if inverse is already calculated & cached. It then returns the cached inverse
 	  ## If matrix x is the same as what is cached and if the inverse is not calculated, the function calculates the inverse and returns it.
 	  ## If matrix x is not the same as the cached matrix, the function calculates the inverse for the new matrix and returns it.	
-	
+	  ## if matrix is new, its inverse is calculated and returned. The function calls setmatrix & setinverse to save the new matrix and inverse to the cache
+
 
 
 makeCacheMatrix<-function() {
@@ -58,43 +59,56 @@ cacheSolve<-function(y=matrix()) {
 	xtest <- x$getmatrix()
 	matrixinvtest<-x$getinverse()
 
-print (xtest)
-print(matrixinvtest)
 		
 	if(identical(xtest,y))
 
 	  {
 		if(is.matrix(matrixinvtest)) {
 						   
-			message(" Input Matrix matches w Orginal and Inverse previously calculated. Obtaining cached Matrix Inverse")
+			message(" Input Matrix matches w Orginal and Inverse previously calculated. Obtaining cached Matrix Inverse.")
 			return (matrixinvtest)
 			
 					}  # end of 2nd If
 
 		else  {
 						   
-			message(" Input Matrix matches w Orginal and Inverse not calculated previously. Calculating Matrix Inverse")
+			message(" Input Matrix matches w Orginal and Inverse not calculated previously. Calculating Matrix Inverse.Inverse is saved to Cache")
 			
-			dt<-det(y)	
+			dt<-det(y)	## Determinant is calculated to check if valid inverse of matrix can be calculated.
 
-			matrixinvtest<-solve(y)
-			return (matrixinvtest)
+			if(dt==0) {message(" Since Determinant is Zero; Inverse cannot be calculated. Returning NA.")
+					matrixinvtest <- NA
+					return (matrixinvtest)
+					}
+			
+			else { matrixinvtest<-solve(y)
+				x$setinverse(matrixinvtest)  ## Inverse is calculated and now saved to cache for future reference
+				return (matrixinvtest)
+			  }
+
 			
 			} # end of else statement
 
 	 } # end of main if statement
 
-      else  { message(" Input Matrix does not match w Original. Calculating Matrix Inverse")
+      else  { message(" Input Matrix does not match w Original. Calculating Matrix Inverse. New Matrix and Inverse saved to cache")
 			
 			dt<-det(y)
-			matrixinvtest<-solve(y)
-			return (matrixinvtest)
+			
+			if(dt==0) {message(" Since Determinant is Zero; Inverse cannot be calculated. Returning NA.")
+					matrixinvtest <- NA
+					return (matrixinvtest)
+					}
+			else{
+					matrixinvtest<-solve(y)
+					
+				x$setmatrix(y)  			## New matrix is now saved to cache
+				x$setinverse(matrixinvtest)		## New matrix's inverse is now saved to cache
+
+					return (matrixinvtest)
+				}
 
       	 } # end of else
-
-
-
-
 
 
 } # end of cacheSolve
