@@ -1,17 +1,22 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This code highlights the use of cache in R Programming. 
 
-## Write a short comment describing this function
+## makeCacheMatrix: This function is a special Function. It contains a list which has a set of four functions. 
+## setmatrix: This function takes the input from the user and stores it in the Cache. 
+## getmatrix: This function retrieves the matrix from cache. It returns NULL is no matrix has been saved to Cache
+## setinverse: This function calculates inverse and saves it to the Cache.
+## getinverse: This function retrieves the inverse of the matrix from Cache.
 
-#makeCacheMatrix <- function(x = matrix()) {}
 
 
 ## Write a short comment describing this function
 
 #cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-#}
-
+					##}
+        ## Return a matrix that is the inverse of 'x'. This function checks if input matrix 'x' is already available in cache
+	  ## If matrix x is the same as what is cached:the function checks if inverse is already calculated & cached. It then returns the cached inverse
+	  ## If matrix x is the same as what is cached and if the inverse is not calculated, the function calculates the inverse and returns it.
+	  ## If matrix x is not the same as the cached matrix, the function calculates the inverse for the new matrix and returns it.	
+	
 
 
 makeCacheMatrix<-function() {
